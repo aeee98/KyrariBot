@@ -1,19 +1,21 @@
 import discord
-from discord import app_commands
 from discord.ext import commands
 import os
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 import logging
 import logging.handlers
-from mainfaq import MainFAQ
+import asyncio
+from typing import Literal, Optional
+
+#KyrariBot is designed as a fast helper 
+class KyrariBot(commands.Bot):
+    async def setup_hook(self):
+        await client.load_extension("mainfaq")
 
 # Setup
-dotenv_path = os.join(os.dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+config = dotenv_values(".env")
 intents = discord.Intents.default()
-client = commands.Bot()
-client.add_cog(MainFAQ(client))
-
+client = KyrariBot(command_prefix="k!", intents=discord.Intents(messages=True, message_content=True, guild_messages=True, emojis_and_stickers = True, typing = True), application_id=config.get("APPLICATION_ID"))
 
 #DEBUG LOGGING
 logger = logging.getLogger('discord')
@@ -34,11 +36,46 @@ async def on_ready():
     print("Bot is ready")
 
 
+#Default Sync Command. Only used by bot owner. Source of function: https://about.abstractumbra.dev/discord.py/2023/01/29/sync-command-example.html
+@client.command()
+@commands.is_owner()
+async def sync(ctx: commands.Context, guilds: commands.Greedy[discord.Object], spec: Optional[Literal["~", "*", "^"]] = None) -> None:
+    if not guilds:
+        if spec == "~":
+            synced = await ctx.bot.tree.sync(guild=ctx.guild)
+        elif spec == "*":
+            ctx.bot.tree.copy_global_to(guild=ctx.guild)
+            synced = await ctx.bot.tree.sync(guild=ctx.guild)
+        elif spec == "^":
+            ctx.bot.tree.clear_commands(guild=ctx.guild)
+            await ctx.bot.tree.sync(guild=ctx.guild)
+            synced = []
+        else:
+            synced = await ctx.bot.tree.sync()
+
+        await ctx.send(
+            f"Synced {len(synced)} commands {'globally' if spec is None else 'to the current guild.'}"
+        )
+        return
+
+    ret = 0
+    for guild in guilds:
+        try:
+            await ctx.bot.tree.sync(guild=guild)
+        except discord.HTTPException:
+            pass
+        else:
+            ret += 1
+
+    await ctx.send(f"Synced the tree to {ret}/{len(guilds)}.")
+
+@client.command()
+async def firsttest(ctx):
+    await ctx.send("Hi")
+
 # Main Method
-def main():
-    client.run(os.environ.get("BOT_ID"), log_handler=None)
-    print("Client is Called. Starting Up")
+async def main():
+    async with client:
+        await client.start(config.get("BOT_ID"))
     
-# Run
-if __name__ == "__main__":
-    main()
+asyncio.run(main())
