@@ -8,7 +8,7 @@ class Viral(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="isvampycore", description = "IS VAMPY CORE?!")
-    @app_commands.checks.Cooldown(rate=1, per=120)
+    @app_commands.checks.cooldown(rate=1, per=120)
     async def is_vampy_core(self, interaction : Interaction) -> None:
         await interaction.response.send_message("Yes! https://isvampycore.com/images/vampygif.gif", ephemeral = False)
 

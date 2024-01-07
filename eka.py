@@ -9,7 +9,7 @@ eka_commands_usage_list = config.get("EKA_COMMANDS_LIST").split(",")
 eka_commands_key_list = ["prifes", "coinshop", "gachaforecast", "gachaguide"]
 eka_commands_choice_list = []
 for key in eka_commands_key_list:
-    eka_commands_choice_list.insert(app_commands.Choice(name=key, value = key))
+    eka_commands_choice_list.append(app_commands.Choice(name=key, value = key))
 
 # Eka Cog is designed for population of specific data. These are designed specified for a specific list of people to be able to edit. This removes the need to include specific roles to redo the structure.
 # This is named after Eka, one of the main contributors of the Princess Connect Discord server who creates most of the helpful forecasts and guides in the server.

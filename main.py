@@ -6,6 +6,7 @@ import logging
 import logging.handlers
 import asyncio
 from typing import Literal, Optional
+import util
 
 #KyrariBot is designed as a fast helper to the Princess Connect Discord.
 class KyrariBot(commands.Bot):
@@ -77,6 +78,7 @@ async def firsttest(ctx):
 
 # Main Method
 async def main():
+    util.populate_dict_from_db()
     async with client:
         await client.start(config.get("BOT_ID"))
     
