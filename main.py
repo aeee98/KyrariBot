@@ -7,10 +7,12 @@ import logging.handlers
 import asyncio
 from typing import Literal, Optional
 
-#KyrariBot is designed as a fast helper 
+#KyrariBot is designed as a fast helper to the Princess Connect Discord.
 class KyrariBot(commands.Bot):
     async def setup_hook(self):
         await client.load_extension("mainfaq")
+        await client.load_extension("eka")
+        await client.load_extension("viral")
 
 # Setup
 config = dotenv_values(".env")
