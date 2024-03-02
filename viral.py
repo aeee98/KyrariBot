@@ -1,6 +1,6 @@
-import discord
 from discord import app_commands, Interaction
 from discord.ext import commands
+import random
 
 # Viral is a section of "fun" commands to add to KyrariBot. For obvious reasons there will be cooldowns on all of these commands. This is named after Viral, the unseiso mod.
 class Viral(commands.Cog):
@@ -15,7 +15,21 @@ class Viral(commands.Cog):
     @app_commands.command(name="neneka", description="Play this command whenever someone asks if Neneka is good.")
     @app_commands.checks.cooldown(rate=1, per=1200)
     async def neneka(self, interaction: Interaction) -> None:
-         await interaction.response.send_message("https://i.imgur.com/G3JlaTj.png", ephemeral = False)
+        await interaction.response.send_message("https://i.imgur.com/G3JlaTj.png", ephemeral = False)
+
+    @app_commands.command(name="leftdoorrightdoor", description="Can't figure out which door to choose? Try this function.")
+    @app_commands.checks.cooldown(rate=1, per=1200)
+    async def door_chooser(self, interaction : Interaction) -> None:
+        random.seed() # reseed random with the current time
+        message = "Choose the "
+        result = random.random()
+        print(result)
+        if (result >= 0.5):
+            message += "right door!"
+        else:
+            message += "left door!"
+        
+        await interaction.response.send_message(message, ephemeral=True)
 
     async def cog_load(self):
         print(f"{self.__class__.__name__} loaded!")

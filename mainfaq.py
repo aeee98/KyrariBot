@@ -70,6 +70,12 @@ class MainFAQ(commands.Cog):
         message = "The Daily Reset is at 5AM JST. Time Remaining: " +convert_time(secondsremaining.total_seconds())
         await interaction.response.send_message(message,ephemeral=True)
 
+    @app_commands.command(name="accountlink", description="Sends the message of how to account link")
+    @app_commands.checks.cooldown(rate=1, per=1200)
+    async def account_link(self, interaction: discord.Interaction) -> None:
+        await interaction.response.send_message("https://media.discordapp.net/attachments/413818124136087573/1091853105416638604/1518755127873.png?ex=65ece3f1&is=65da6ef1&hm=048e9942c2c21f479fb3bc191a0a9c55f48191ec3ee18f1dd0b1bf392821f1e8&=&format=webp&quality=lossless&width=810&height=241")
+
+
 
     async def cog_load(self):
         print(f"{self.__class__.__name__} loaded!")
