@@ -2,7 +2,8 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from dotenv import dotenv_values
-from util import faq_dict
+from util import faq_dict, convert_time
+import datetime
 
 config = dotenv_values(".env")
 
@@ -21,20 +22,53 @@ class MainFAQ(commands.Cog):
     #TODO : Make this a more dynamic solution since hardcoding is obviously not the way to go.
     #TODO : Turning below functions into a dynamic card
     @app_commands.command(name="gachaforecast", description="Sends you the link to the gacha forecast by Eka This message is private.")
+    @app_commands.checks.cooldown(rate=1, per=1200)
     async def gacha_forecast(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["gachaforecast"], ephemeral = True)
 
     @app_commands.command(name="gachaguide", description="Sends you the link to the gacha guide by Eka. This message is private.")
+    @app_commands.checks.cooldown(rate=1, per=1200)
     async def gacha_forecast(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["gachaguide"], ephemeral = True)
 
     @app_commands.command(name="prifes", description="Shows the priority list for all Prifes Banners by Kyrari. This message is private.")
+    @app_commands.checks.cooldown(rate=1, per=1200)
     async def prifes_guide(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["prifes"], ephemeral = True)
 
     @app_commands.command(name="coinshop", description="Shows the priority list for all the currency shops by Wazahai. This message is private.")
+    @app_commands.checks.cooldown(rate=1, per=1200)
     async def coinshop_guide(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["coinshop"], ephemeral = True)
+
+    @app_commands.command(name="arenareset", description="Tells you when the next arena reset is. This message is private.")
+    @app_commands.checks.cooldown(rate=1, per=1200)
+    async def dailyreset(self, interaction: discord.Interaction) -> None:
+        now = datetime.datetime.now(datetime.timezone.utc)
+        # get the next closest 10am UTC+0 as this is the reset
+        resettime = datetime.datetime(year=now.year, month=now.month, day = now.day, hour = 10, minute = 0,tzinfo=datetime.timezone.utc)
+        if (resettime <= now):
+            # add a day if past reset
+            resettime += datetime.timedelta(days=1)
+        
+        secondsremaining = resettime - now
+        message = "The PvP Reset is at 7PM JST. Time Remaining: " + convert_time(secondsremaining.total_seconds())
+        await interaction.response.send_message(message,ephemeral=True)
+
+
+    @app_commands.command(name="dailyreset", description="Tells you when the next daily reset is. This message is private.")
+    @app_commands.checks.cooldown(rate=1, per=1200)
+    async def dailyreset(self, interaction: discord.Interaction) -> None:
+        now = datetime.datetime.now(datetime.timezone.utc)
+        # get the next closest 8pm UTC+0 as this is the reset
+        resettime = datetime.datetime(year=now.year, month=now.month, day = now.day, hour = 20, minute = 0, tzinfo=datetime.timezone.utc)
+        if (resettime <= now):
+            # add a day if past reset
+            resettime += datetime.timedelta(days=1)
+        
+        secondsremaining = resettime - now
+        message = "The Daily Reset is at 5AM JST. Time Remaining: " +convert_time(secondsremaining.total_seconds())
+        await interaction.response.send_message(message,ephemeral=True)
 
 
     async def cog_load(self):

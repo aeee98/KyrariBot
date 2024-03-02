@@ -43,3 +43,16 @@ def update_db():
         isUpdated = False
         print("DB has been updated.")
         # Considering logging on a master discord channel
+
+ 
+# Python Program to Convert seconds
+# into hours, minutes and seconds 
+def convert_time(seconds):
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+     
+    return "%d hour(s), %d minutes(s) and %02d second(s)" % (hour, minutes, seconds)
+     
