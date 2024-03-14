@@ -43,7 +43,7 @@ class MainFAQ(commands.Cog):
 
     @app_commands.command(name="arenareset", description="Tells you when the next arena reset is. This message is private.")
     @app_commands.checks.cooldown(rate=1, per=1200)
-    async def dailyreset(self, interaction: discord.Interaction) -> None:
+    async def arenareset(self, interaction: discord.Interaction) -> None:
         now = datetime.datetime.now(datetime.timezone.utc)
         # get the next closest 10am UTC+0 as this is the reset
         resettime = datetime.datetime(year=now.year, month=now.month, day = now.day, hour = 10, minute = 0,tzinfo=datetime.timezone.utc)
