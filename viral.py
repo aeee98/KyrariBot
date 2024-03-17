@@ -8,17 +8,17 @@ class Viral(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="isvampycore", description = "IS VAMPY CORE?!")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def is_vampy_core(self, interaction : Interaction) -> None:
         await interaction.response.send_message("Yes! https://isvampycore.com/images/vampygif.gif", ephemeral = False)
 
     @app_commands.command(name="neneka", description="Play this command whenever someone asks if Neneka is good.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def neneka(self, interaction: Interaction) -> None:
         await interaction.response.send_message("https://i.imgur.com/G3JlaTj.png", ephemeral = False)
 
     @app_commands.command(name="leftdoorrightdoor", description="Can't figure out which door to choose? Try this function.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def door_chooser(self, interaction : Interaction) -> None:
         random.seed() # reseed random with the current time
         message = "Choose the "
@@ -30,7 +30,6 @@ class Viral(commands.Cog):
             message += "left door!"
         
         await interaction.response.send_message(message, ephemeral=True)
-
     async def cog_load(self):
         print(f"{self.__class__.__name__} loaded!")
 

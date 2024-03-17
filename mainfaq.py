@@ -22,27 +22,27 @@ class MainFAQ(commands.Cog):
     #TODO : Make this a more dynamic solution since hardcoding is obviously not the way to go.
     #TODO : Turning below functions into a dynamic card
     @app_commands.command(name="gachaforecast", description="Sends you the link to the gacha forecast by Eka This message is private.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def gacha_forecast(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["gachaforecast"], ephemeral = True)
 
     @app_commands.command(name="gachaguide", description="Sends you the link to the gacha guide by Eka. This message is private.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def gacha_forecast(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["gachaguide"], ephemeral = True)
 
     @app_commands.command(name="prifes", description="Shows the priority list for all Prifes Banners by Kyrari. This message is private.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def prifes_guide(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["prifes"], ephemeral = True)
 
     @app_commands.command(name="coinshop", description="Shows the priority list for all the currency shops by Wazahai. This message is private.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def coinshop_guide(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(faq_dict["coinshop"], ephemeral = True)
 
     @app_commands.command(name="arenareset", description="Tells you when the next arena reset is. This message is private.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def arenareset(self, interaction: discord.Interaction) -> None:
         now = datetime.datetime.now(datetime.timezone.utc)
         # get the next closest 10am UTC+0 as this is the reset
@@ -57,7 +57,7 @@ class MainFAQ(commands.Cog):
 
 
     @app_commands.command(name="dailyreset", description="Tells you when the next daily reset is. This message is private.")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def dailyreset(self, interaction: discord.Interaction) -> None:
         now = datetime.datetime.now(datetime.timezone.utc)
         # get the next closest 8pm UTC+0 as this is the reset
@@ -71,7 +71,7 @@ class MainFAQ(commands.Cog):
         await interaction.response.send_message(message,ephemeral=True)
 
     @app_commands.command(name="accountlink", description="Sends the message of how to account link")
-    @app_commands.checks.cooldown(rate=1, per=1200)
+    @app_commands.checks.cooldown(rate=1, per=30)
     async def account_link(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message("https://media.discordapp.net/attachments/413818124136087573/1091853105416638604/1518755127873.png?ex=65ece3f1&is=65da6ef1&hm=048e9942c2c21f479fb3bc191a0a9c55f48191ec3ee18f1dd0b1bf392821f1e8&=&format=webp&quality=lossless&width=810&height=241")
 
