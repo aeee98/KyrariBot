@@ -72,6 +72,18 @@ async def sync(ctx: commands.Context, guilds: commands.Greedy[discord.Object], s
 
     await ctx.send(f"Synced the tree to {ret}/{len(guilds)}.")
 
+# This function is used to check for an announcement/general channel where the developer can send a message to announce new features on the fly.
+@client.command()
+@commands.is_owner()
+async def check(ctx: commands.Context) -> None:
+    for guild in client.guilds:
+        text_to_send_back = "Server " + guild.name + " possible announcement channels: "
+        for channel in guild.channels:
+            if ('general' in channel.name or 'announcement' in channel.name or 'bot' in channel.name):
+                text_to_send_back += channel.name + " " 
+        ctx.send(text_to_send_back)
+
+
 @client.command()
 async def firsttest(ctx):
     await ctx.send("Hi")
