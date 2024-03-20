@@ -81,7 +81,7 @@ async def check(ctx: commands.Context) -> None:
         for channel in guild.channels:
             if ('general' in channel.name or 'announcement' in channel.name or 'bot' in channel.name):
                 text_to_send_back += channel.name + " " 
-        ctx.send(text_to_send_back)
+        await ctx.send(text_to_send_back)
 
 
 @client.command()
